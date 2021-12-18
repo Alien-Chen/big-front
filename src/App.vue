@@ -2,33 +2,39 @@
   <div id="app">
     <div class="layui-container">
       <form class="layui-form layui-form-pane" action="">
-        <div class="layui-form-item" :class="{'is-error': errors.has('username')}">
-          <label class="layui-form-label">用户名</label>
-          <div class="layui-input-block">
-            <input type="text" v-validate="'required|email'" v-model="username" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-          </div>
-          <div class="error-text">
-            <span>{{ errors.first('username') }}</span>
-          </div>
+        <div class="layui-form-item">
+          <validation-provider rules="required|email" v-slot="{ errors }">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+              <input type="text" v-model="username" name="用户名" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+            <div class="error-text">
+              <span>{{ errors[0] }}</span>
+            </div>
+          </validation-provider>
         </div>
-        <div class="layui-form-item" :class="{'is-error': errors.has('password')}">
-          <label class="layui-form-label">密码</label>
-          <div class="layui-input-block">
-            <input v-validate="'required'" v-model="password" type="text" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
-          </div>
-          <div class="error-text">
-            <span>{{ errors.first('password') }}</span>
-          </div>
+        <div class="layui-form-item">
+          <validation-provider rules="required" v-slot="{ errors }">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+              <input v-model="password" type="text" name="密码" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+            <div class="error-text">
+              <span>{{ errors[0] }}</span>
+            </div>
+          </validation-provider>
         </div>
-        <div class="layui-form-item" :class="{'is-error': errors.has('authCode')}">
-          <label class="layui-form-label">验证码</label>
-          <div class="layui-input-inline">
-            <input type="text" name="authCode" v-validate="'required|length:4'" v-model="authCode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
-          </div>
-          <div class="layui-word-aux auth-code" v-html="svg" @click="getCaptcha"></div>
-          <div class="error-text">
-            <span>{{ errors.first('authCode') }}</span>
-          </div>
+        <div class="layui-form-item">
+          <validation-provider rules="required|length:4" v-slot="{ errors }">
+            <label class="layui-form-label">验证码</label>
+            <div class="layui-input-inline">
+              <input type="text" name="验证码" v-model="authCode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-word-aux auth-code" v-html="svg" @click="getCaptcha"></div>
+            <div class="error-text">
+              <span>{{ errors[0] }}</span>
+            </div>
+          </validation-provider>
         </div>
         <div class="layui-form-item">
           <div class="layui-input-block">
@@ -42,6 +48,26 @@
 </template>
 <script>
 import axios from 'axios'
+import { ValidationProvider, extend } from 'vee-validate'
+import { required, email, length } from 'vee-validate/dist/rules'
+
+extend('length', {
+  ...length,
+  message: (name, data) => {
+    return `${name} 的长度需为${data.length}`
+  }
+})
+
+extend('email', {
+  ...email,
+  message: '请输入正确邮箱格式'
+})
+
+extend('required', {
+  ...required,
+  message: '{_field_} 不能为空'
+})
+
 export default {
   name: 'App',
   data () {
@@ -51,6 +77,9 @@ export default {
       authCode: '',
       svg: ''
     }
+  },
+  components: {
+    ValidationProvider
   },
   mounted () {
     this.getCaptcha()
@@ -71,14 +100,8 @@ export default {
   background: #ccc;
 }
 .error-text {
-  margin-top: 5px;
-  display: none;
-}
-.is-error {
-  .error-text {
-    display: block;
-    color: rgba(240,20,20,.8);
-  }
+  display: block;
+  color: rgba(240,20,20,.8);
 }
 .auth-code {
   display: inline-block;
