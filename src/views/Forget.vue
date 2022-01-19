@@ -11,13 +11,13 @@
           </li>
         </ul>
         <div class="layui-form layui-tab-content">
-          <div>
-            <form class="layui-form layui-form-pane" action="">
+          <ValidationObserver ref="form" >
+            <form class="layui-form layui-form-pane"  @submit.prevent="onSubmit">
               <div class="layui-form-item">
                 <validation-provider rules="required|email" v-slot="{ errors }">
                   <label class="layui-form-label">用户名</label>
                   <div class="layui-input-block">
-                    <input type="text" v-model="username" name="用户名" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    <input type="text" v-model="username" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -28,9 +28,10 @@
                 <validation-provider rules="required|length:4" v-slot="{ errors }">
                   <label class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
-                    <input type="text" name="验证码" v-model="authCode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                    <input type="text" name="authCode" v-model="authCode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
                   </div>
-                  <div class="layui-word-aux auth-code" v-html="svg" @click="getCaptcha"></div>
+                  <!-- <div class="layui-word-aux auth-code" v-html="svg" @click="getCaptcha"></div> -->
+                  <Captcha />
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
                   </div>
@@ -38,37 +39,20 @@
               </div>
               <div class="layui-form-item">
                 <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="formDemo">找回密码</button>
+                  <button class="layui-btn" lay-filter="formDemo" type="submit">找回密码</button>
                 </div>
               </div>
             </form>
-          </div>
+          </ValidationObserver>
         </div>
       </div>
     </div>
    </div>
 </template>
 <script>
-import { getCaptcha } from '@/api/login.js'
-import { ValidationProvider, extend } from 'vee-validate'
-import { required, email, length } from 'vee-validate/dist/rules'
-
-extend('length', {
-  ...length,
-  message: (name, data) => {
-    return `${name} 的长度需为${data.length}`
-  }
-})
-
-extend('email', {
-  ...email,
-  message: '请输入正确邮箱格式'
-})
-
-extend('required', {
-  ...required,
-  message: '{_field_} 不能为空'
-})
+import { forgetPassword } from '@/api/login.js'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import Captcha from '@/components/Captcha'
 
 export default {
   name: 'Login',
@@ -76,22 +60,28 @@ export default {
     return {
       username: '',
       password: '',
-      authCode: '',
-      svg: ''
+      authCode: ''
     }
   },
   components: {
-    ValidationProvider
-  },
-  mounted () {
-    this.getCaptcha()
+    ValidationProvider,
+    ValidationObserver,
+    Captcha
   },
   methods: {
-    getCaptcha () {
-      getCaptcha().then(res => {
-        if (res.status === 200) {
-          this.svg = res.data.data
+    onSubmit () {
+      const params = {
+        username: this.username,
+        code: this.authCode,
+        user: 'chen'
+      }
+      this.$refs.form.validate().then(success => {
+        if (!success) {
+          return
         }
+        forgetPassword(params).then(res => {
+          console.log(res)
+        })
       })
     }
   }

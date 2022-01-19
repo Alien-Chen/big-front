@@ -9,13 +9,13 @@
           </li>
         </ul>
         <div class="layui-form layui-tab-content">
-          <div>
-            <form class="layui-form layui-form-pane" action="">
+          <ValidationObserver ref="form" v-slot="{ invalid }">
+            <form class="layui-form layui-form-pane" @submit.prevent="onSubmit">
               <div class="layui-form-item">
-                <validation-provider rules="required|email" v-slot="{ errors }">
+                <validation-provider name="username" rules="required|email" v-slot="{ errors }">
                   <label class="layui-form-label">用户名</label>
                   <div class="layui-input-block">
-                    <input type="text" v-model="username" name="用户名" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    <input type="text" v-model="username" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -23,10 +23,10 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider rules="required" v-slot="{ errors }">
+                <validation-provider name="password" rules="required" v-slot="{ errors }">
                   <label class="layui-form-label">密码</label>
                   <div class="layui-input-block">
-                    <input v-model="password" type="text" name="密码" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input v-model="password" type="text" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -34,12 +34,13 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider rules="required|length:4" v-slot="{ errors }">
+                <validation-provider name="authCode" rules="required|length:4" v-slot="{ errors }">
                   <label class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
-                    <input type="text" name="验证码" v-model="authCode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                    <input type="text" name="authCode" v-model="authCode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
                   </div>
-                  <div class="layui-word-aux auth-code" v-html="svg" @click="getCaptcha"></div>
+                  <Captcha />
+                  <!-- <div class="layui-word-aux auth-code" v-html="svg" @click="getCaptcha"></div> -->
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
                   </div>
@@ -47,38 +48,21 @@
               </div>
               <div class="layui-form-item">
                 <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="formDemo">点击登录</button>
+                  <button class="layui-btn" type="submit" :disabled="invalid" lay-filter="formDemo">点击登录</button>
                   <router-link :to="{name: 'Forget'}" class="a-btn">忘记密码</router-link>
                 </div>
               </div>
             </form>
-          </div>
+          </ValidationObserver>
         </div>
       </div>
     </div>
    </div>
 </template>
 <script>
-import { ValidationProvider, extend } from 'vee-validate'
-import { required, email, length } from 'vee-validate/dist/rules'
-import { getCaptcha } from '@/api/login.js'
-
-extend('length', {
-  ...length,
-  message: (name, data) => {
-    return `${name} 的长度需为${data.length}`
-  }
-})
-
-extend('email', {
-  ...email,
-  message: '请输入正确邮箱格式'
-})
-
-extend('required', {
-  ...required,
-  message: '{_field_} 不能为空'
-})
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import Captcha from '@/components/Captcha'
+import { login } from '@/api/login'
 
 export default {
   name: 'Login',
@@ -86,22 +70,33 @@ export default {
     return {
       username: '',
       password: '',
-      authCode: '',
-      svg: ''
+      authCode: ''
     }
   },
   components: {
-    ValidationProvider
-  },
-  mounted () {
-    this.getCaptcha()
+    ValidationProvider,
+    ValidationObserver,
+    Captcha
   },
   methods: {
-    getCaptcha () {
-      getCaptcha().then(res => {
-        if (res.status === 200) {
-          this.svg = res.data.data
+    onSubmit () {
+      this.$refs.form.validate().then(success => {
+        if (!success) {
+          return
         }
+        const userInfo = {
+          username: this.username,
+          password: this.password,
+          code: this.authCode,
+          sid: this.$store.state.uuid
+        }
+        login(userInfo).then(res => {
+          if (res.code === 200) {
+            this.$message(res.message)
+          } else {
+            this.$refs.form.setErrors(res.message)
+          }
+        })
       })
     }
   }
@@ -115,12 +110,7 @@ export default {
   display: block;
   color: rgba(240,20,20,.8);
 }
-.auth-code {
-  display: inline-block;
-  position: relative;
-  top: 0px;
-  left: 60px;
-}
+
 .layui-container {
   background: #fff;
 }

@@ -11,13 +11,13 @@
           </li>
         </ul>
         <div class="layui-form layui-tab-content">
-          <div>
+          <ValidationObserver ref="form" v-slot="{ invalid }">
             <form class="layui-form layui-form-pane" action="">
               <div class="layui-form-item">
-                <validation-provider rules="required|email" v-slot="{ errors }">
+                <validation-provider name="username" rules="required|email" v-slot="{ errors }">
                   <label class="layui-form-label">用户名</label>
                   <div class="layui-input-block">
-                    <input type="text" v-model="username" name="用户名" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    <input type="text" v-model="username" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -25,10 +25,10 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider rules="required" v-slot="{ errors }">
+                <validation-provider name="nickname" rules="required" v-slot="{ errors }">
                   <label class="layui-form-label">昵称</label>
                   <div class="layui-input-block">
-                    <input type="text" v-model="nickname" name="昵称" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+                    <input type="text" v-model="nickname" name="nickname" placeholder="请输入昵称" autocomplete="off" class="layui-input">
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -36,10 +36,10 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider name="confirm" rules="required:length:6" v-slot="{ errors }">
+                <validation-provider name="password" rules="required:length:6" v-slot="{ errors }">
                   <label class="layui-form-label">密码</label>
                   <div class="layui-input-block">
-                    <input v-model="password" type="password" name="密码" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input v-model="password" type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -47,10 +47,10 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider rules="required:length:6|password:@confirm" v-slot="{ errors }">
+                <validation-provider name="repeatPassword" rules="required:length:6|password:@password" v-slot="{ errors }">
                   <label class="layui-form-label">确认密码</label>
                   <div class="layui-input-block">
-                    <input v-model="repeatPassword" type="password" name="确认密码" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input v-model="repeatPassword" type="password" name="repeatPassword" placeholder="请输入密码" autocomplete="off" class="layui-input">
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -58,12 +58,12 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider rules="required|length:4" v-slot="{ errors }">
+                <validation-provider name="authCode" rules="required|length:4" v-slot="{ errors }">
                   <label class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
-                    <input type="text" name="验证码" v-model="authCode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                    <input type="text" name="authCode" v-model="authCode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
                   </div>
-                  <div class="layui-word-aux auth-code" v-html="svg" @click="getCaptcha"></div>
+                  <Captcha />
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
                   </div>
@@ -71,45 +71,20 @@
               </div>
               <div class="layui-form-item">
                 <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+                  <button class="layui-btn" lay-submit lay-filter="formDemo" :disabled="invalid" @click.prevent="onSubmit">提交</button>
                 </div>
               </div>
             </form>
-          </div>
+          </ValidationObserver>
         </div>
       </div>
     </div>
    </div>
 </template>
 <script>
-import { getCaptcha } from '@/api/login.js'
-import { ValidationProvider, extend } from 'vee-validate'
-import { required, email, length } from 'vee-validate/dist/rules'
-
-extend('length', {
-  ...length,
-  message: (name, data) => {
-    return `${name} 的长度需为${data.length}`
-  }
-})
-
-extend('email', {
-  ...email,
-  message: '请输入正确邮箱格式'
-})
-
-extend('required', {
-  ...required,
-  message: '{_field_} 不能为空'
-})
-
-extend('password', {
-  params: ['target'],
-  validate: (value, { target }) => {
-    return value === target
-  },
-  message: '两次密码不一致'
-})
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import Captcha from '@/components/Captcha'
+import { reg } from '@/api/login'
 
 export default {
   name: 'Reg',
@@ -119,22 +94,40 @@ export default {
       password: '',
       authCode: '',
       nickname: '',
-      repeatPassword: '',
-      svg: ''
+      repeatPassword: ''
     }
   },
   components: {
-    ValidationProvider
-  },
-  mounted () {
-    this.getCaptcha()
+    ValidationProvider,
+    ValidationObserver,
+    Captcha
   },
   methods: {
-    getCaptcha () {
-      getCaptcha().then(res => {
-        if (res.status === 200) {
-          this.svg = res.data.data
+    onSubmit () {
+      this.$refs.form.validate().then(success => {
+        if (!success) {
+          return
         }
+        const params = {
+          username: this.username,
+          password: this.password,
+          code: this.authCode,
+          nickname: this.nickname,
+          sid: this.$store.state.uuid
+        }
+        reg(params).then(res => {
+          if (res.code === 200) {
+            this.$message('注册成功,请登录')
+            setTimeout(() => {
+              this.$router.push({
+                name: 'Login'
+              })
+              this.$close()
+            }, 1000)
+          } else {
+            this.$refs.form.setErrors(res.message)
+          }
+        })
       })
     }
   }
