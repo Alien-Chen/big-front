@@ -13,5 +13,5 @@
 // limitations under the License.
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'prod' ? '/big-front' : ''
+  publicPath: process.env.NODE_ENV === 'prod' ? '' : ''
 }
