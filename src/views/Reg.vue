@@ -4,20 +4,29 @@
       <div class="layui-tab layui-tab-brief" lay-filter="user">
         <ul class="layui-tab-title">
           <li>
-            <router-link :to="{name: 'Login'}">登录</router-link>
+            <router-link :to="{ name: 'Login' }">登录</router-link>
           </li>
-          <li class="layui-this">
-            注册
-          </li>
+          <li class="layui-this">注册</li>
         </ul>
         <div class="layui-form layui-tab-content">
           <ValidationObserver ref="form" v-slot="{ invalid }">
             <form class="layui-form layui-form-pane" action="">
               <div class="layui-form-item">
-                <validation-provider name="username" rules="required|email" v-slot="{ errors }">
+                <validation-provider
+                  name="username"
+                  rules="required|email"
+                  v-slot="{ errors }"
+                >
                   <label class="layui-form-label">用户名</label>
                   <div class="layui-input-block">
-                    <input type="text" v-model="username" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    <input
+                      type="text"
+                      v-model="username"
+                      name="username"
+                      placeholder="请输入用户名"
+                      autocomplete="off"
+                      class="layui-input"
+                    />
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -25,10 +34,21 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider name="nickname" rules="required" v-slot="{ errors }">
+                <validation-provider
+                  name="nickname"
+                  rules="required"
+                  v-slot="{ errors }"
+                >
                   <label class="layui-form-label">昵称</label>
                   <div class="layui-input-block">
-                    <input type="text" v-model="nickname" name="nickname" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+                    <input
+                      type="text"
+                      v-model="nickname"
+                      name="nickname"
+                      placeholder="请输入昵称"
+                      autocomplete="off"
+                      class="layui-input"
+                    />
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -36,10 +56,21 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider name="password" rules="required:length:6" v-slot="{ errors }">
+                <validation-provider
+                  name="password"
+                  rules="required:length:6"
+                  v-slot="{ errors }"
+                >
                   <label class="layui-form-label">密码</label>
                   <div class="layui-input-block">
-                    <input v-model="password" type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input
+                      v-model="password"
+                      type="password"
+                      name="password"
+                      placeholder="请输入密码"
+                      autocomplete="off"
+                      class="layui-input"
+                    />
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -47,10 +78,21 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider name="repeatPassword" rules="required:length:6|password:@password" v-slot="{ errors }">
+                <validation-provider
+                  name="repeatPassword"
+                  rules="required:length:6|password:@password"
+                  v-slot="{ errors }"
+                >
                   <label class="layui-form-label">确认密码</label>
                   <div class="layui-input-block">
-                    <input v-model="repeatPassword" type="password" name="repeatPassword" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input
+                      v-model="repeatPassword"
+                      type="password"
+                      name="repeatPassword"
+                      placeholder="请输入密码"
+                      autocomplete="off"
+                      class="layui-input"
+                    />
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -58,10 +100,22 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider name="authCode" rules="required|length:4" v-slot="{ errors }">
+                <validation-provider
+                  name="authCode"
+                  rules="required|length:4"
+                  v-slot="{ errors }"
+                >
                   <label class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
-                    <input type="text" name="authCode" v-model="authCode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                    <input
+                      type="text"
+                      name="authCode"
+                      v-model="authCode"
+                      lay-verify="required"
+                      placeholder="请输入验证码"
+                      autocomplete="off"
+                      class="layui-input"
+                    />
                   </div>
                   <Captcha />
                   <div class="error-text">
@@ -71,7 +125,15 @@
               </div>
               <div class="layui-form-item">
                 <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="formDemo" :disabled="invalid" @click.prevent="onSubmit">提交</button>
+                  <button
+                    class="layui-btn"
+                    lay-submit
+                    lay-filter="formDemo"
+                    :disabled="invalid"
+                    @click.prevent="onSubmit"
+                  >
+                    提交
+                  </button>
                 </div>
               </div>
             </form>
@@ -79,7 +141,7 @@
         </div>
       </div>
     </div>
-   </div>
+  </div>
 </template>
 <script>
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
@@ -139,7 +201,7 @@ export default {
 }
 .error-text {
   display: block;
-  color: rgba(240,20,20,.8);
+  color: rgba(240, 20, 20, 0.8);
 }
 .auth-code {
   display: inline-block;
@@ -155,7 +217,7 @@ export default {
   cursor: pointer;
   text-decoration: none;
   &:hover {
-    color: #009688;
+    color: #1e9fff;
   }
 }
 input {

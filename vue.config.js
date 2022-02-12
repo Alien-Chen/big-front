@@ -13,5 +13,14 @@
 // limitations under the License.
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'prod' ? '' : ''
+  publicPath: process.env.NODE_ENV === 'prod' ? '' : '',
+  css: {
+    loaderOptions: {
+      scss: {
+        prependData: `
+          @import "@/styles/var.scss";
+        `
+      }
+    }
+  }
 }

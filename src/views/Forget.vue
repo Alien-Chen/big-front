@@ -4,20 +4,25 @@
       <div class="layui-tab layui-tab-brief" lay-filter="user">
         <ul class="layui-tab-title">
           <li>
-            <router-link :to="{name: 'Login'}">登录</router-link>
+            <router-link :to="{ name: 'Login' }">登录</router-link>
           </li>
-          <li class="layui-this">
-            找回密码
-          </li>
+          <li class="layui-this">找回密码</li>
         </ul>
         <div class="layui-form layui-tab-content">
-          <ValidationObserver ref="form" >
-            <form class="layui-form layui-form-pane"  @submit.prevent="onSubmit">
+          <ValidationObserver ref="form">
+            <form class="layui-form layui-form-pane" @submit.prevent="onSubmit">
               <div class="layui-form-item">
                 <validation-provider rules="required|email" v-slot="{ errors }">
                   <label class="layui-form-label">用户名</label>
                   <div class="layui-input-block">
-                    <input type="text" v-model="username" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    <input
+                      type="text"
+                      v-model="username"
+                      name="username"
+                      placeholder="请输入用户名"
+                      autocomplete="off"
+                      class="layui-input"
+                    />
                   </div>
                   <div class="error-text">
                     <span>{{ errors[0] }}</span>
@@ -25,10 +30,21 @@
                 </validation-provider>
               </div>
               <div class="layui-form-item">
-                <validation-provider rules="required|length:4" v-slot="{ errors }">
+                <validation-provider
+                  rules="required|length:4"
+                  v-slot="{ errors }"
+                >
                   <label class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
-                    <input type="text" name="authCode" v-model="authCode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                    <input
+                      type="text"
+                      name="authCode"
+                      v-model="authCode"
+                      lay-verify="required"
+                      placeholder="请输入验证码"
+                      autocomplete="off"
+                      class="layui-input"
+                    />
                   </div>
                   <!-- <div class="layui-word-aux auth-code" v-html="svg" @click="getCaptcha"></div> -->
                   <Captcha />
@@ -39,7 +55,9 @@
               </div>
               <div class="layui-form-item">
                 <div class="layui-input-block">
-                  <button class="layui-btn" lay-filter="formDemo" type="submit">找回密码</button>
+                  <button class="layui-btn" lay-filter="formDemo" type="submit">
+                    找回密码
+                  </button>
                 </div>
               </div>
             </form>
@@ -47,7 +65,7 @@
         </div>
       </div>
     </div>
-   </div>
+  </div>
 </template>
 <script>
 import { forgetPassword } from '@/api/login.js'
@@ -93,7 +111,7 @@ export default {
 }
 .error-text {
   display: block;
-  color: rgba(240,20,20,.8);
+  color: rgba(240, 20, 20, 0.8);
 }
 .auth-code {
   display: inline-block;
@@ -109,7 +127,7 @@ export default {
   cursor: pointer;
   text-decoration: none;
   &:hover {
-    color: #009688;
+    color: #1e9fff;
   }
 }
 input {

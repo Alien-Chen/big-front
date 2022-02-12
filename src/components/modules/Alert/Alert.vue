@@ -1,12 +1,12 @@
 <template>
   <div class="alert-wrap" v-show="isShow" @click="close">
-     <div class="alert-box">
-        <div class="alert-content">{{ msg }}</div>
-        <div class="alert-footer">
-           <div class="btn confirm-btn" @click="close">确定</div>
-           <div class="btn cancel-btn" @click="close">取消</div>
-        </div>
-     </div>
+    <div class="alert-box">
+      <div class="alert-content">{{ msg }}</div>
+      <div class="alert-footer">
+        <div class="btn confirm-btn" @click="close">确定</div>
+        <div class="btn cancel-btn" @click="close">取消</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -69,7 +69,7 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   &.confirm-btn {
-    background: #009688;
+    background: #1e9fff;
     color: #fff;
   }
 }
