@@ -2,16 +2,26 @@
   <div class="panel">
     <div class="layui-container" style="overflow: hidden">
       <ul>
-        <!-- <li><a href="">首页</a></li> -->
-        <li><a href="">提问</a></li>
-        <li><a href="">分享</a></li>
-        <li><a href="">讨论</a></li>
-        <li><a href="">建议</a></li>
-        <li><a href="">公告</a></li>
-        <li><a href="">动态</a></li>
-        <li class="layui-hide-xs"><span class="line"></span></li>
-        <li class="layui-hide-xs layui-hide-sm"><a href="">我发表的贴</a></li>
-        <li class="layui-hide-xs layui-hide-sm"><a href="">我收藏的贴</a></li>
+        <router-link tag="li" to="/" class="layui-hide-xs">
+          <a href="/">首页</a>
+        </router-link>
+        <router-link
+          v-for="item in items"
+          :key="item.id"
+          tag="li"
+          :to="item.path"
+        >
+          <a href="jie/index.html">
+            {{ item.name }}
+            <span class="layui-badge-dot" v-if="item.isNew"></span>
+          </a>
+        </router-link>
+        <!-- 用户登录后才显示 -->
+        <template v-if="isLogin">
+          <li class="layui-hide-xs"><span class="line"></span></li>
+          <li class="layui-hide-xs layui-hide-sm"><a href="">我发表的贴</a></li>
+          <li class="layui-hide-xs layui-hide-sm"><a href="">我收藏的贴</a></li>
+        </template>
       </ul>
       <div class="right layui-hide-xs">
         <span class="layui-icon layui-icon-search"></span>
@@ -22,7 +32,51 @@
 </template>
 <script>
 export default {
-  name: 'Panel'
+  name: 'Panel',
+  data () {
+    return {
+      items: [
+        {
+          path: '/index/ask',
+          isNew: false,
+          name: '提问',
+          id: 1
+        },
+        {
+          path: '/index/share',
+          isNew: true,
+          name: '分享',
+          id: 2
+        },
+        {
+          path: '/index/discuss',
+          isNew: false,
+          name: '讨论',
+          id: 3
+        },
+        {
+          path: '/index/advise',
+          isNew: false,
+          name: '建议',
+          id: 4
+        },
+        {
+          path: '/index/notice',
+          isNew: false,
+          name: '公告',
+          id: 5
+        },
+        {
+          path: '/index/logs',
+          isNew: false,
+          name: '动态',
+          id: 6
+        }
+      ],
+      isLogin: this.$store.isLogin // 存到store中
+
+    }
+  }
 }
 </script>
 
@@ -53,6 +107,11 @@ ul {
     display: inline-block;
     a {
       padding: 0 20px;
+    }
+    &.layui-this {
+      a {
+        color: $color-primary;
+      }
     }
   }
   .line {

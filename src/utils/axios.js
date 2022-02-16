@@ -1,30 +1,47 @@
 import axios from 'axios'
 
+const CancelToken = axios.CancelToken
 class HttpRequest {
   constructor (baseUrl) {
     this.baseUrl = baseUrl
+    this.pending = {}
   }
 
   // 合并配置项
   mergeRequestConfig (option) {
     const baseConfig = {
       baseURL: this.baseUrl,
-      timeout: 60 * 10,
+      timeout: 60 * 100,
       headers: { 'Content-Type': 'application/json;charset=utf-8' }
     }
     const config = Object.assign(baseConfig, option)
     return config
   }
 
+  removePending (key, isRequest = false) {
+    if (this.pending[key] && isRequest) {
+      this.pending[key]('请求被取消')
+    }
+    delete this.pending[key]
+  }
+
   // 拦截逻辑
   interceptors (instance) {
     instance.interceptors.request.use((config) => {
+      const key = config.url + '&' + config.method
+      this.removePending(key, true)
+      config.cancelToken = new CancelToken((c) => {
+        this.pending[key] = c
+      })
+      // console.log(this.pending)
       return config
     }, (error) => {
       return Promise.reject(error)
     })
 
     instance.interceptors.response.use((res) => {
+      const key = res.config.url + '&' + res.config.method
+      this.removePending(key)
       if (res.status === 200) {
         return Promise.resolve(res.data)
       } else {
