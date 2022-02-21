@@ -135,7 +135,13 @@ export default {
         }
         login(userInfo).then(res => {
           if (res.code === 200) {
-            this.$message(res.message)
+            // this.$message(res.message)
+            this.$store.commit('SETUSERINFO', res.data)
+            this.$store.commit('SETISLOGIN', true)
+            this.username = ''
+            this.password = ''
+            this.code = ''
+            this.$router.push({ name: 'ChannelIndex' })
           } else {
             this.$refs.form.setErrors(res.message)
           }

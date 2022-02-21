@@ -21,6 +21,11 @@ export default {
   mixins: [
     ListMixin
   ],
+  data () {
+    return {
+      limit: 5
+    }
+  },
   mounted () {
     this._getList(1)
   }

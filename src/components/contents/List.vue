@@ -90,7 +90,7 @@ export default {
       this._getList()
     },
     _getMore () {
-      // this.page++
+      this.page++
       this._getList()
     },
     search (status) {

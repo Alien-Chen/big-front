@@ -14,9 +14,9 @@
 
 module.exports = {
   publicPath: process.env.NODE_ENV === 'prod' ? '' : '',
-  devServer: {
-    proxy: 'http://localhost:36742'
-  },
+  // devServer: {
+  //   proxy: 'http://localhost:36742'
+  // },
   css: {
     loaderOptions: {
       scss: {

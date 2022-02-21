@@ -6,7 +6,7 @@ export default {
     return {
       list: [],
       page: 0,
-      limit: 20,
+      limit: 5,
       catalog: '',
       sort: 'created',
       status: '',
@@ -30,8 +30,8 @@ export default {
         page: this.page,
         catalog: this.catalog,
         sort: this.sort,
-        status: this.status
-
+        status: this.status,
+        limit: this.limit
       }
       getList(params).then((res) => {
         this.isRequest = false
