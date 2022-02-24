@@ -83,15 +83,15 @@ i{font-style: normal;}
 
 
 /* 辅助 */
-a:hover{color: #1E9FFF; transition: all .3s;}
-pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid #1E9FFF;  background-color: #f8f8f8; font-family: Courier New; overflow: auto;}
+a:hover{color: #b6cd59; transition: all .3s;}
+pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid #b6cd59;  background-color: #f8f8f8; font-family: Courier New; overflow: auto;}
 
 .layui-container{padding: 0;}
 .fly-main{width: 1079px; min-height: 600px; margin: 0 auto 15px;}
 .layui-badge{height: 20px; line-height: 20px; border-radius: 2px;}
 
 .fly-link{color: #01AAED;}
-.fly-link:hover{color: #1E9FFF;}
+.fly-link:hover{color: #b6cd59;}
 .fly-grey{color: #999;}
 
 .fly-msg, .fly-error{padding: 10px 15px; line-height: 24px;}
@@ -111,11 +111,11 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-avatar img{display: block; width: 45px; height: 45px; margin: 0; border-radius: 2px;}
 
 /* 徽章 */
-.fly-badge-vip{height: 16px; line-height: 16px; padding: 0 3px; background-color: #FF5722; color: #fff; border-radius: 2px;}
-.fly-badge-accept{height: 18px; line-height: 18px; padding: 0 5px !important; background-color: #1E9FFF; border-radius: 2px;}
+.fly-badge-vip{height: 16px; line-height: 16px; padding: 0 3px; background-color: #f11718; color: #fff; border-radius: 2px;}
+.fly-badge-accept{height: 18px; line-height: 18px; padding: 0 5px !important; background-color: #b6cd59; border-radius: 2px;}
 
 /* 赞助商 */
-.fly-zanzhu{display: block; position: relative; height: 60px; line-height: 60px; margin-top: 10px; padding: 0 20px; text-align: center; font-size: 16px; font-weight: 300; background-color: #1E9FFF; color: #fff;}
+.fly-zanzhu{display: block; position: relative; height: 60px; line-height: 60px; margin-top: 10px; padding: 0 20px; text-align: center; font-size: 16px; font-weight: 300; background-color: #b6cd59; color: #fff;}
 .fly-zanzhu:first-child{margin-top: 0;}
 .fly-zanzhu:hover{opacity: 0.9; color: #fff;}
 
@@ -147,7 +147,7 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-header .fly-nav a{padding: 0 25px 0 60px;}
 .fly-header .fly-nav-user li a{padding: 0 10px;}
 .fly-header .fly-nav-user li .fly-nav-avatar{padding-right: 0;}
-.fly-header .fly-nav-user a.iconfont{color: #A9B7B7;}
+.fly-header .fly-nav-user a.iconfont{color: #fff;}
 .fly-header>.layui-nav-item a{color: rgba(255,255,255,0.5);}
 
 .fly-header .layui-this a{color: #fff;}
@@ -177,8 +177,8 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-column{height: 50px; line-height: 50px;}
 .fly-column ul li{position: relative; display: inline-block; height: 50px;}
 .fly-column ul li a{padding: 0 20px;}
-.fly-column ul li.layui-this:after{ position: absolute; bottom: 13px; left: 8px; z-index: 0; width: 50px; height: 22px; border: 1px solid #1E9FFF; border-radius: 2px;}
-.fly-column ul li.layui-this a{color: #1E9FFF;}
+.fly-column ul li.layui-this:after{ position: absolute; bottom: 13px; left: 8px; z-index: 0; width: 50px; height: 22px; border: 1px solid #b6cd59; border-radius: 2px;}
+.fly-column ul li.layui-this a{color: #b6cd59;}
 .fly-column ul li .fly-mid{margin: 0 20px;}
 .fly-column-right{position: absolute; right: 0; top: 0;}
 .fly-column-right .layui-btn{vertical-align: initial;}
@@ -187,12 +187,12 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 /* 搜索 */
 .fly-search{display: inline-block; vertical-align: top; width: 50px; height: 50px; margin-right: 10px; text-align: center; cursor: pointer; font-size: 20px;}
 .fly-search .layui-icon{font-size: 20px;}
-.fly-search:hover{color: #1E9FFF;}
+.fly-search:hover{color: #b6cd59;}
 .fly-layer-search input{height: 75px; line-height: 75px; width: 500px; padding: 0 15px; font-size: 20px; border: none 0; background: none;}
 
 /* 筛选 */
 .fly-filter a{padding: 0 8px; color: #666;}
-.fly-filter a.layui-this{color: #1E9FFF;}
+.fly-filter a.layui-this{color: #b6cd59;}
 .fly-filter .fly-mid{margin: 0 8px;}
 .fly-filter-right{position: absolute; right: 10px; top: 0;}
 
@@ -207,7 +207,7 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-tab-border span{border: 1px solid #ddd; border-right: none; font-size:0;}
 .fly-tab-border span a{position: relative; height: 36px; line-height: 36px; padding: 0 20px; border-right: 1px solid #ddd; font-size: 14px; background-color: #fff;}
 .fly-tab-border .tab-this{color: #000;}
-.fly-tab-border .tab-this:after{content: ''; position: absolute; bottom: -1px; left: -1px; width: 100%; height: 1px; padding: 0 1px; background-color: #1E9FFF;}
+.fly-tab-border .tab-this:after{content: ''; position: absolute; bottom: -1px; left: -1px; width: 100%; height: 1px; padding: 0 1px; background-color: #b6cd59;}
 
 /* 分页 */
 .laypage-main,
@@ -230,15 +230,15 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-list-info{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 .fly-list li h2{height: 26px; font-size: 0;}
 .fly-list li h2 a{display: inline-block; max-width: 80%; padding-right: 10px; font-size: 16px;}
-.fly-list li h2 .layui-badge{top: -2px; height: 16px; line-height: 16px; padding: 0 5px; margin-right: 10px; font-size: 12px; border: 1px solid #1E9FFF; background: none; color: #1E9FFF;}
+.fly-list li h2 .layui-badge{top: -2px; height: 16px; line-height: 16px; padding: 0 5px; margin-right: 10px; font-size: 12px; border: 1px solid #b6cd59; background: none; color: #b6cd59;}
 
 .fly-list-info{position: relative; font-size: 13px; color: #999;}
 .fly-list-info>*{padding-right: 15px;}
 .fly-list-info a[link]{color: #999;}
-.fly-list-info a[link]:hover{color: #1E9FFF;}
+.fly-list-info a[link]:hover{color: #b6cd59;}
 .fly-list-info .icon-renzheng{position: relative; top: 1px; margin-right: 3px;}
 .fly-list-info .fly-badge-vip{position: relative; margin-left: 2px;}
-.fly-list-kiss{color: #FF5722;}
+.fly-list-kiss{color: #f11718;}
 .fly-list-nums{position: absolute; right: 0; top: 0; padding-right: 0!important;}
 .fly-list-nums i{position: relative; padding: 0 3px 0 15px;}
 
@@ -262,7 +262,7 @@ body .layui-edit-face  .layui-layer-content{padding:0; background-color:#fff; co
 .layui-edit-face ul li:hover{position: relative; z-index: 2; border: 1px solid #eb7350; background: #fff9ec;}
 
 /* 签到 */
-.fly-signin cite{padding: 0 5px; color: #FF5722; font-style: normal;}
+.fly-signin cite{padding: 0 5px; color: #f11718; font-style: normal;}
 .fly-signin .layui-badge-dot{top: -7px; margin-left: 0px;}
 .fly-signin-list{padding: 0; line-height: 30px;}
 .fly-signin-list .layui-tab-item{padding: 10px; height: 320px; overflow-x: hidden; overflow-y: auto;}
@@ -271,7 +271,7 @@ body .layui-edit-face  .layui-layer-content{padding:0; background-color:#fff; co
 .fly-signin-list li:last-child{border: none 0;}
 .fly-signin-list img{width: 30px; height: 30px; margin-right: 10px; border-radius: 2px;}
 .fly-signin-list span{padding-left: 10px;}
-.fly-signin-list span i{color: #FF5722;}
+.fly-signin-list span i{color: #f11718;}
 .fly-signin-list .fly-none{padding-top: 20px; min-height: 0;}
 .fly-signin-days{position: absolute; right: 15px; padding-left: 10px; color: #999;}
 .fly-signin-main{position: relative; height: 38px; padding: 24px 15px; text-align: center;}
@@ -449,12 +449,12 @@ body .fly-user-main{position: relative; min-height: 600px;}
 .fly-case-btn{position: absolute; bottom: 30px; left: 0; width: 100%; text-align: center;}
 .fly-case-btn a{color: #fff;}
 .fly-case-btn .layui-btn-primary{background: none; color: #fff;}
-.fly-case-btn .layui-btn-primary:hover{border-color: #1E9FFF;}
+.fly-case-btn .layui-btn-primary:hover{border-color: #b6cd59;}
 
 .fly-case-tab{margin-top: 20px; text-align: center;}
 .fly-case-tab span,
-.fly-case-tab span a{border-color: #1E9FFF;}
-.fly-case-tab .tab-this{background-color: #1E9FFF; color: #fff;}
+.fly-case-tab span a{border-color: #b6cd59;}
+.fly-case-tab .tab-this{background-color: #b6cd59; color: #fff;}
 
 .fly-case-list{margin-top: 15px; font-size: 0;}
 .fly-case-list li, 
@@ -476,7 +476,7 @@ body .fly-user-main{position: relative; min-height: 600px;}
 .layer-ext-ul{margin: 10px; max-height: 500px;}
 .layer-ext-ul img{width: 50px; height: 50px; border-radius: 100%;}
 .layer-ext-ul li{margin: 8px;}
-.layer-ext-case .layui-layer-title{border: none; background-color: #1E9FFF; color: #fff;}
+.layer-ext-case .layui-layer-title{border: none; background-color: #b6cd59; color: #fff;}
 
 /* 广告 */
 .fly-ad{position: relative; background-color: #f2f2f2; overflow:hidden;}

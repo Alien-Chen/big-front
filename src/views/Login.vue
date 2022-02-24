@@ -133,11 +133,13 @@ export default {
           code: this.authCode,
           sid: this.$store.state.uuid
         }
+
         login(userInfo).then(res => {
           if (res.code === 200) {
             // this.$message(res.message)
             this.$store.commit('SETUSERINFO', res.data)
             this.$store.commit('SETISLOGIN', true)
+            this.$store.commit('SETTOKEN', res.token)
             this.username = ''
             this.password = ''
             this.code = ''

@@ -3,6 +3,11 @@ import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import ChannelIndex from '@/views/channel'
 import Type1 from '@/views/channel/type1.vue'
+import store from '@/store'
+
+import jwt from 'jsonwebtoken'
+import moment from 'dayjs'
+
 const Login = () => import(/* webpackChunkName: 'login' */'@/views/Login.vue')
 const Reg = () => import(/* webpackChunkName: 'reg' */ '@/views/Reg.vue')
 const Forget = () => import(/* webpackChunkName: 'forget' */ '@/views/Forget.vue')
@@ -34,6 +39,8 @@ const MyPost = () =>
   import(/* webpackChunkName: 'mypost' */ '@/components/user/common/MyPost.vue')
 const MyCollection = () =>
   import(/* webpackChunkName: 'mycollection' */ '@/components/user/common/MyCollection.vue')
+
+const NoFound = () => import(/* webpackChunkName: 'nofound' */ '@/views/NoFound.vue')
 
 Vue.use(VueRouter)
 
@@ -76,6 +83,7 @@ const routes = [
   {
     path: '/center',
     component: Center,
+    meta: { requiresAuth: true },
     linkActiveClass: 'layui-this',
     children: [
       {
@@ -85,7 +93,6 @@ const routes = [
       },
       {
         path: 'set',
-        name: 'Set',
         component: Settings,
         children: [
           {
@@ -112,7 +119,6 @@ const routes = [
       },
       {
         path: 'posts',
-        name: 'Posts',
         component: Posts,
         children: [
           {
@@ -138,12 +144,48 @@ const routes = [
       //   component: Others
       // }
     ]
+  },
+  {
+    path: '/404',
+    component: NoFound
+  },
+  {
+    path: '*',
+    redirect: '/404'
   }
 ]
 
 const router = new VueRouter({
   linkExactActiveClass: 'layui-this',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+  const uuid = localStorage.getItem('uuid')
+  if (token !== '' && token !== null) {
+    const payload = jwt.decode(token)
+    if (moment().isBefore(moment(payload.exp * 1000))) {
+      // 设置localStorage里面的缓存的token信息 + 用户信息
+      store.commit('SETTOKEN', token)
+      store.commit('SETUSERINFO', userInfo)
+      store.commit('SETISLOGIN', true)
+      store.commit('SETUUID', uuid)
+    } else {
+      localStorage.clear()
+    }
+  }
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    const isLogin = store.state.isLogin
+    if (isLogin) {
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

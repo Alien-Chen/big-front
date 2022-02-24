@@ -36,13 +36,13 @@ export default {
 
 @for $i from 0 to 5 {
   .pd#{$i} {
-    padding: $i * 10 + "px";
+    padding: $i * 10 + px;
   }
   .pl#{$i} {
-    padding-left: $i * 10 + "px";
+    padding-left: $i * 10 + px;
   }
   .pr#{$i} {
-    padding-right: $i * 10 + "px";
+    padding-right: $i * 10 + px;
   }
 }
 

@@ -69,7 +69,7 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   &.confirm-btn {
-    background: #1e9fff;
+    background: #b6cd59;
     color: #fff;
   }
 }

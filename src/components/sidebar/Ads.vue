@@ -7,7 +7,7 @@
         target="_blank"
         class="fly-zanzhu"
         time-limit="2017.09.25-2099.01.01"
-        style="background-color: #1e9fff"
+        style="background-color: #b6cd59"
         >LayIM 3.0 - layui 旗舰之作</a
       >
     </div>

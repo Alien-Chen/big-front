@@ -6,7 +6,7 @@
         href="#signin"
         class="layui-hide-sm layui-show-xs-block fly-right"
         id="LAY_goSignin"
-        style="color: #ff5722"
+        style="color: #f11718"
         >去签到</a
       >
     </div>

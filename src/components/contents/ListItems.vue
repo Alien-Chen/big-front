@@ -55,8 +55,10 @@
 </template>
 
 <script>
-import moment from 'moment'
+import moment from 'dayjs'
+
 import _ from 'lodash'
+
 export default {
   name: 'ListItem',
   props: {
@@ -105,7 +107,7 @@ export default {
       if (moment(val).isBefore(moment().subtract(7, 'days'))) {
         return moment(val).format('YYYY-MM-DD')
       } else {
-        return moment(val).from(moment())
+        return moment().from(val)
       }
     }
   },

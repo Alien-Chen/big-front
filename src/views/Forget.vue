@@ -127,7 +127,7 @@ export default {
   cursor: pointer;
   text-decoration: none;
   &:hover {
-    color: #1e9fff;
+    color: #b6cd59;
   }
 }
 input {

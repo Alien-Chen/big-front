@@ -13,19 +13,33 @@ export default {
     }
   },
   mounted () {
-    const localUuid = localStorage.getItem('uuid')
-    if (localUuid) {
-      this.$store.commit('SETUUID', localUuid)
+    // const localUuid = localStorage.getItem('uuid')
+    // console.log('前', localUuid)
+    // if (localUuid) {
+    //   this.$store.commit('SETUUID', localUuid)
+    //   this.getCaptcha()
+    // } else {
+    //   const uuid = uuidv4()
+    //   console.log('new', uuid)
+    //   localStorage.setItem('uuid', uuid)
+    //   this.$store.commit('SETUUID', localUuid)
+    //   this.getCaptcha()
+    // }
+    // console.log('后', localUuid)
+    let uid = ''
+    if (localStorage.getItem('uuid')) {
+      uid = localStorage.getItem('uuid')
     } else {
-      const uuid = uuidv4()
-      localStorage.setItem('uuid', uuid)
-      this.$store.commit('SETUUID', localUuid)
+      uid = uuidv4()
+      // localStorage.setItem(uid)
     }
+    this.$store.commit('SETUUID', uid)
     this.getCaptcha()
   },
   methods: {
     getCaptcha () {
       const uid = this.$store.state.uuid
+      console.log('getCaptcha', uid)
       const params = { uuid: uid }
       getCaptcha(params).then(res => {
         if (res.code === 200) {
