@@ -9,7 +9,7 @@
           </li>
         </ul>
         <div class="layui-form layui-tab-content">
-          <ValidationObserver ref="form" v-slot="{ invalid }">
+          <ValidationObserver ref="form" v-slot="{ invalid, errors }">
             <form class="layui-form layui-form-pane" @submit.prevent="onSubmit">
               <div class="layui-form-item">
                 <validation-provider
@@ -82,6 +82,7 @@
               </div>
               <div class="layui-form-item">
                 <div class="layui-input-block">
+                  {{ errors[0] }}
                   <button
                     class="layui-btn layui-btn-normal"
                     type="submit"
@@ -137,6 +138,8 @@ export default {
         login(userInfo).then(res => {
           if (res.code === 200) {
             // this.$message(res.message)
+            // 储存用户名
+            res.data.username = this.username
             this.$store.commit('SETUSERINFO', res.data)
             this.$store.commit('SETISLOGIN', true)
             this.$store.commit('SETTOKEN', res.token)
@@ -145,7 +148,9 @@ export default {
             this.code = ''
             this.$router.push({ name: 'ChannelIndex' })
           } else {
-            this.$refs.form.setErrors(res.message)
+            this.$pop('shake', res.msg)
+            // console.log(res.msg)
+            // this.$refs.form.setErrors([res.msg])
           }
         })
       })

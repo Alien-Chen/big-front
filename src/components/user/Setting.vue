@@ -11,9 +11,9 @@
         <li>
           <router-link :to="{ name: 'Passwd' }">密码</router-link>
         </li>
-        <li>
+        <!-- <li>
           <router-link :to="{ name: 'Account' }">帐号绑定</router-link>
-        </li>
+        </li> -->
       </ul>
       <div class="layui-tab-content" style="padding: 20px 0">
         <router-view></router-view>

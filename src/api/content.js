@@ -24,3 +24,5 @@ export const getLinks = () => {
 export const getTopWeek = () => {
   return request.get('/public/topWeek')
 }
+
+export const uploadImg = (formData) => request.post('/content/upload', formData)

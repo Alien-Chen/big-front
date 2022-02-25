@@ -9,6 +9,9 @@
           <li class="layui-this">找回密码</li>
         </ul>
         <div class="layui-form layui-tab-content">
+          <p class="tip">
+            点击找回密码，系统将会发送邮箱到您的邮箱中验证身份是否本人，请注意查收
+          </p>
           <ValidationObserver ref="form">
             <form class="layui-form layui-form-pane" @submit.prevent="onSubmit">
               <div class="layui-form-item">
@@ -31,6 +34,7 @@
               </div>
               <div class="layui-form-item">
                 <validation-provider
+                  ref="authCode"
                   rules="required|length:4"
                   v-slot="{ errors }"
                 >
@@ -91,14 +95,19 @@ export default {
       const params = {
         username: this.username,
         code: this.authCode,
-        user: 'chen'
+        // user: 'chen',
+        sid: this.$store.state.uuid
       }
       this.$refs.form.validate().then(success => {
         if (!success) {
           return
         }
         forgetPassword(params).then(res => {
-          console.log(res)
+          if (res.code === 200) {
+            this.$message('邮箱发送成功，请前去确认')
+          } else {
+            this.$refs.authCode.setErrors([res.msg])
+          }
         })
       })
     }
@@ -121,6 +130,12 @@ export default {
 }
 .layui-container {
   background: #fff;
+}
+
+.tip {
+  color: rgb(151, 146, 146);
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 .a-btn {
   margin-left: 10px;

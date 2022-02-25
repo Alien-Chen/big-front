@@ -187,7 +187,7 @@ export default {
               this.$close()
             }, 1000)
           } else {
-            this.$refs.form.setErrors(res.message)
+            this.$refs.form.setErrors([res.msg])
           }
         })
       })
@@ -198,10 +198,6 @@ export default {
 <style lang="scss" scoped>
 .login-wrap {
   background: #ccc;
-}
-.error-text {
-  display: block;
-  color: rgba(240, 20, 20, 0.8);
 }
 .auth-code {
   display: inline-block;

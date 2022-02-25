@@ -20,6 +20,7 @@ export default {
 @import "assets/layui/css/layui.css";
 @import "assets/css/global.css";
 @import "assets/layui/css/modules/layer/default/layer.css";
+@import "assets/css/utilities.scss";
 
 // 公用样式
 .svg {
@@ -33,6 +34,10 @@ export default {
 // .pd20 {
 //   padding: 20px;
 // }
+.error-text {
+  display: block;
+  color: rgba(240, 20, 20, 0.8);
+}
 
 @for $i from 0 to 5 {
   .pd#{$i} {
@@ -41,8 +46,20 @@ export default {
   .pl#{$i} {
     padding-left: $i * 10 + px;
   }
+  .pt#{$i} {
+    padding-top: $i * 10 + px !important;
+  }
+  .pb#{$i} {
+    padding-bottom: $i * 10 + px !important;
+  }
   .pr#{$i} {
     padding-right: $i * 10 + px;
+  }
+  .mt#{$i} {
+    margin-top: $i * 10 + px !important;
+  }
+  .ml#{$i} {
+    margin-left: $i * 10 + px !important;
   }
 }
 

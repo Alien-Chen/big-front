@@ -1,6 +1,6 @@
 <template>
   <div class="panel main pd2">
-    <div class="msg">Hi, Admin，你已经是我们的正式会员！</div>
+    <div class="msg">Hi, {{ userInfo.nickname }} 欢迎来到小强社区</div>
     <div class="layui-row layui-col-space20">
       <div class="layui-col-md6">
         <div class="panel border">
@@ -8,11 +8,13 @@
           <div class="content fly-signin">
             <p>
               积分经验值：
-              <cite>100</cite>
+              <cite>{{ userInfo.favs }}</cite>
             </p>
             <p>
               您当前为:
-              <cite>非VIP</cite>
+              <cite>{{
+                userInfo.isVip === "0" ? "非会员" : `尊贵的会员`
+              }}</cite>
             </p>
           </div>
         </div>
@@ -98,28 +100,13 @@ export default {
           name: '我的收藏',
           route: 'mycollection',
           icon: 'layui-icon-rate-solid'
-        },
-        {
-          name: '其他资料',
-          route: '',
-          icon: 'layui-icon-template-1'
-        },
-        {
-          name: '关注公众号',
-          route: '',
-          icon: 'layui-icon-login-wechat'
-        },
-        {
-          name: '文档',
-          route: '',
-          icon: 'layui-icon-read'
-        },
-        {
-          name: '后台管理',
-          route: '',
-          icon: 'layui-icon-user'
         }
       ]
+    }
+  },
+  computed: {
+    userInfo () {
+      return this.$store.state.userInfo
     }
   }
 }

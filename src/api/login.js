@@ -15,3 +15,5 @@ export const login = (data) => {
 export const reg = (data) => {
   return request.post('/login/reg', data)
 }
+
+export const reset = (info) => request.post('/login/reset', { ...info })

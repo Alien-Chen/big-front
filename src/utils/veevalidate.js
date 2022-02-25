@@ -1,10 +1,12 @@
 import { extend, localize } from 'vee-validate'
-import { required, email, length } from 'vee-validate/dist/rules'
+import { required, email, length, min, max } from 'vee-validate/dist/rules'
 import zh from 'vee-validate/dist/locale/zh_CN.json'
 
 extend('required', required)
 extend('email', email)
 extend('length', length)
+extend('min', min)
+extend('max', max)
 
 extend('password', {
   params: ['target'],
@@ -12,6 +14,15 @@ extend('password', {
     return value === target
   },
   message: '两次密码不一致'
+})
+
+// // Custom validate
+extend('nickname', {
+  validate: value => {
+    // console.log((/^\d+/).test(value))
+    return !(/^\d+/).test(value)
+  },
+  message: '不能以纯数字为昵称'
 })
 
 localize('zh_CN', {
@@ -28,7 +39,8 @@ localize('zh_CN', {
     nickname: '昵称',
     password: '密码',
     repeatPassword: '确认密码',
-    authCode: '验证码'
+    authCode: '验证码',
+    oldpassword: '旧密码'
   },
   fields: {
     username: {
