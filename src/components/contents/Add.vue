@@ -1,0 +1,312 @@
+<template>
+  <div class="layui-container fly-marginTop">
+    <div
+      class="fly-panel"
+      pad20
+      style="padding-top: 5px"
+      :class="{ 'd-hide': isHide }"
+    >
+      <!--<div class="fly-none">没有权限</div>-->
+      <div class="layui-form layui-form-pane">
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+          <ul class="layui-tab-title">
+            <li class="layui-this">
+              发表新帖
+              <!-- 编辑帖子 -->
+            </li>
+          </ul>
+          <div
+            class="layui-form layui-tab-content"
+            id="LAY_ucm"
+            style="padding: 20px 0"
+          >
+            <div class="layui-tab-item layui-show">
+              <form>
+                <validation-observer ref="observer" v-slot="{ invalid }">
+                  <div class="layui-row layui-col-space15 layui-form-item">
+                    <div class="layui-col-md3">
+                      <validation-provider
+                        name="catalog"
+                        rules="is_not:请选择"
+                        v-slot="{ errors }"
+                      >
+                        <div class="layui-row">
+                          <label class="layui-form-label">所在专栏</label>
+                          <div class="layui-input-block">
+                            <div
+                              class="layui-unselect layui-form-select"
+                              :class="{ 'layui-form-selected': isSelect }"
+                              @click="changeSelect()"
+                            >
+                              <div class="layui-select-title">
+                                <input
+                                  type="text"
+                                  placeholder="请选择"
+                                  readonly
+                                  v-model="catalogs[cataIndex].text"
+                                  class="layui-input layui-unselect"
+                                />
+                                <i class="layui-edge"></i>
+                              </div>
+                              <dl class="layui-anim layui-anim-upbit">
+                                <dd
+                                  v-for="(item, index) in catalogs"
+                                  :key="'catalog' + index"
+                                  @click="chooseCatalog(item, index)"
+                                  :class="{ 'layui-this': index === cataIndex }"
+                                >
+                                  {{ item.text }}
+                                </dd>
+                              </dl>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="layui-row">
+                          <span class="error-text">{{ errors[0] }}</span>
+                        </div>
+                      </validation-provider>
+                    </div>
+                    <div class="layui-col-md9">
+                      <validation-provider
+                        name="title"
+                        rules="required"
+                        v-slot="{ errors }"
+                      >
+                        <div class="layui-row">
+                          <label for="L_title" class="layui-form-label"
+                            >标题</label
+                          >
+                          <div class="layui-input-block">
+                            <input
+                              type="text"
+                              id="L_title"
+                              name="title"
+                              required
+                              lay-verify="required"
+                              autocomplete="off"
+                              class="layui-input"
+                            />
+                            <!-- <input type="hidden" name="id" value="{{d.edit.id}}"> -->
+                          </div>
+                        </div>
+                        <div class="layui-row">
+                          <span class="error-text">{{ errors[0] }}</span>
+                        </div>
+                      </validation-provider>
+                    </div>
+                  </div>
+                  <editor @changeContent="add" :initContent="content"></editor>
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">悬赏飞吻</label>
+                      <div class="layui-input-inline" style="width: 190px">
+                        <div
+                          class="layui-unselect layui-form-select"
+                          :class="{ 'layui-form-selected': isSelect_fav }"
+                          @click="changeFav()"
+                        >
+                          <div class="layui-select-title">
+                            <input
+                              type="text"
+                              placeholder="请选择"
+                              readonly
+                              v-model="favList[favIndex]"
+                              class="layui-input layui-unselect"
+                            />
+                            <i class="layui-edge"></i>
+                          </div>
+                          <dl class="layui-anim layui-anim-upbit">
+                            <dd
+                              v-for="(item, index) in favList"
+                              :key="'catalog' + index"
+                              @click="chooseFav(item, index)"
+                              :class="{ 'layui-this': index === favIndex }"
+                            >
+                              {{ item }}
+                            </dd>
+                          </dl>
+                        </div>
+                      </div>
+                      <div class="layui-form-mid layui-word-aux">
+                        发表后无法更改
+                      </div>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <validation-provider
+                      name="authCode"
+                      ref="codefield"
+                      rules="required|length:4"
+                      v-slot="{ errors }"
+                    >
+                      <div class="layui-row">
+                        <label for="L_vercode" class="layui-form-label"
+                          >验证码</label
+                        >
+                        <div class="layui-input-inline">
+                          <input
+                            type="text"
+                            name="code"
+                            v-model="code"
+                            placeholder="请输入验证码"
+                            autocomplete="off"
+                            class="layui-input"
+                          />
+                        </div>
+                        <Captcha />
+                      </div>
+                      <div class="layui-form-mid">
+                        <span class="error-text">{{ errors[0] }}</span>
+                      </div>
+                    </validation-provider>
+                  </div>
+                  <div class="layui-form-item">
+                    <button
+                      class="layui-btn"
+                      :disabled="invalid"
+                      lay-filter="*"
+                      lay-submit
+                      @click="submit()"
+                    >
+                      立即发布
+                    </button>
+                  </div>
+                </validation-observer>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { addPost } from '@/api/content'
+import Editor from '@/components/modules/editor'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import Captcha from '@/components/Captcha'
+export default {
+  name: 'Add',
+  components: {
+    Editor,
+    ValidationProvider,
+    ValidationObserver,
+    Captcha
+  },
+  computed: {
+    isHide () {
+      return this.$store.state.isHide
+    }
+  },
+  data () {
+    return {
+      isSelect: false,
+      isSelect_fav: false,
+      cataIndex: 0,
+      favIndex: 0,
+      code: '',
+      catalogs: [
+        {
+          text: '请选择',
+          value: ''
+        },
+        {
+          text: '提问',
+          value: 'ask'
+        },
+        {
+          text: '分享',
+          value: 'share'
+        },
+        {
+          text: '讨论',
+          value: 'discuss'
+        },
+        {
+          text: '建议',
+          value: 'advise'
+        }
+      ],
+      favList: [20, 30, 50, 60, 80],
+      content: '',
+      title: ''
+    }
+  },
+  mounted () {
+    const saveData = localStorage.getItem('addData')
+    if (saveData && saveData !== '') {
+      this.$message('是否加载未编辑完的内容？', () => {
+        const obj = JSON.parse(saveData)
+        this.content = obj.content
+        this.title = obj.title
+        this.cataIndex = obj.cataIndex
+        this.favIndex = obj.favIndex
+      }, () => {
+        localStorage.setItem('addData', '')
+      })
+    }
+  },
+  methods: {
+    chooseCatalog (item, index) {
+      this.cataIndex = index
+    },
+    chooseFav (item, index) {
+      this.favIndex = index
+    },
+    changeSelect () {
+      this.isSelect = !this.isSelect
+    },
+    changeFav () {
+      this.isSelect_fav = !this.isSelect_fav
+    },
+    add (val) {
+      this.content = val
+      const saveData = {
+        title: this.title,
+        cataIndex: this.cataIndex,
+        content: this.content,
+        favIndex: this.favIndex
+      }
+      if (this.title.trim() !== '' && this.content.trim() !== '') {
+        localStorage.setItem('addData', JSON.stringify(saveData))
+      }
+    },
+    async submit () {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        // ABORT!!
+        return
+      }
+      // 文章内容是否为空的判断
+      if (this.content.trim() === '') {
+        this.$message('文章内容不得为空！')
+        return
+      }
+      // 添加新的文章
+      addPost({
+        title: this.title,
+        catalog: this.catalogs[this.cataIndex].value,
+        content: this.content,
+        fav: this.favList[this.favIndex],
+        code: this.code,
+        sid: this.$store.state.sid
+      }).then((res) => {
+        if (res.code === 200) {
+          // 清空已经发布的内容
+          localStorage.setItem('addData', '')
+          this.$message('发贴成功~~2s后跳转！')
+          setTimeout(() => {
+            this.$router.push({ name: 'index' })
+          }, 2000)
+        } else {
+          this.$message(res.msg)
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+</style>

@@ -19,13 +19,13 @@
         <!-- 用户登录后才显示 -->
         <template v-if="isLogin">
           <li class="layui-hide-xs"><span class="line"></span></li>
-          <li class="layui-hide-xs layui-hide-sm"><a href="">我发表的贴</a></li>
-          <li class="layui-hide-xs layui-hide-sm"><a href="">我收藏的贴</a></li>
+          <li class="layui-hide-xs layui-hide-sm"><a href>我发表的贴</a></li>
+          <li class="layui-hide-xs layui-hide-sm"><a href>我收藏的贴</a></li>
         </template>
       </ul>
       <div class="right layui-hide-xs">
         <span class="layui-icon layui-icon-search"></span>
-        <a href="" class="layui-btn">发表新帖</a>
+        <router-link to="/add" class="layui-btn">发表新帖</router-link>
       </div>
     </div>
   </div>

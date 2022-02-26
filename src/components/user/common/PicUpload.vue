@@ -48,7 +48,7 @@ export default {
         // console.log('TCL: upload -> res', res)
         if (res.code === 200) {
           const baseUrl =
-            process.env.NODE_ENV === 'pro'
+            process.env.NODE_ENV === 'prod'
               ? config.BaseUrl.pro
               : config.BaseUrl.dev
           this.pic = baseUrl + res.data

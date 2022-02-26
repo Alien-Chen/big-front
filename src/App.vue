@@ -66,7 +66,11 @@ export default {
 .mt20 {
   margin-top: -20px;
 }
-
+.d-hide {
+  position: absolute;
+  overflow: hidden;
+  height: 0;
+}
 .text-center {
   text-align: center;
 }

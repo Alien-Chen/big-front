@@ -8,7 +8,8 @@ export default new Vuex.Store({
     uuid: '',
     token: '',
     isLogin: false,
-    userInfo: {}
+    userInfo: {},
+    isHide: false
   },
   mutations: {
     SETUUID (state, uid) {
@@ -27,6 +28,10 @@ export default new Vuex.Store({
     SETTOKEN (state, value) {
       state.token = value
       localStorage.setItem('token', value)
+    },
+    // 设置 Add.vue container的状态
+    SETHIDE (state, value) {
+      state.isHide = value
     }
   },
   actions: {
