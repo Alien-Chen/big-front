@@ -7,9 +7,17 @@ const AlertPlugin = {
     instance.$mount(document.createElement('div'))
     document.body.appendChild(instance.$el)
 
-    Vue.prototype.$message = function (message) {
+    Vue.prototype.$message = (msg, success, cancel) => {
+    // 逻辑...
+      instance.type = 'confirm'
+      instance.msg = msg
       instance.isShow = true
-      instance.msg = message
+      if (typeof success !== 'undefined') {
+        instance.success = success
+      }
+      if (typeof cancel !== 'undefined') {
+        instance.cancel = cancel
+      }
     }
     Vue.prototype.$close = function () {
       instance.isShow = false

@@ -28,3 +28,6 @@ export const getTopWeek = () => {
 export const uploadImg = (formData) => request.post('/content/upload', formData)
 
 export const addPost = (data) => request.post('/content/add', { ...data })
+
+// 获取文章详情
+export const getDetail = (tid) => request.get('/public/content/detail?tid=' + tid)

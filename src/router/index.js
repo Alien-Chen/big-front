@@ -49,6 +49,9 @@ const Reset = () =>
 const Add = () => import(/* webpackChunkName: 'reset' */ '@/components/contents/Add.vue')
 Vue.use(VueRouter)
 
+const Detail = () =>
+  import(/* webpackChunkName: 'detail' */ '@/components/contents/Detail.vue')
+
 const routes = [
   {
     path: '/',
@@ -84,6 +87,12 @@ const routes = [
     name: 'Add',
     component: Add,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/detail/:tid',
+    name: 'Detail',
+    props: true,
+    component: Detail
   },
   {
     path: '/user/:uid',

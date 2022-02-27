@@ -2,7 +2,7 @@
   <div class="fly-panel">
     <h3 class="fly-panel-title">温馨通道</h3>
     <div class="fly-panel-main layui-row" v-if="lists.length !== 0">
-      <ul class="layui-clear imooc-quick">
+      <ul class="layui-clear chen-quick">
         <li
           class="layui-col-xs6"
           v-for="(item, index) in lists"
@@ -53,7 +53,7 @@ $border-color: #f2f2f2;
 .no-data {
   text-align: center;
 }
-.imooc-quick {
+.chen-quick {
   border: 1px solid $border-color;
   border-bottom: none;
   border-right: none;

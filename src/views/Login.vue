@@ -43,7 +43,7 @@
                   <div class="layui-input-block">
                     <input
                       v-model="password"
-                      type="text"
+                      type="password"
                       name="password"
                       placeholder="请输入密码"
                       autocomplete="off"

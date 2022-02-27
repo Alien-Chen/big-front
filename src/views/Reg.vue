@@ -187,7 +187,8 @@ export default {
               this.$close()
             }, 1000)
           } else {
-            this.$refs.form.setErrors([res.msg])
+            this.$message(res.msg)
+            // this.$refs.form.setErrors([res.msg])
           }
         })
       })

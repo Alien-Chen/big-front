@@ -39,7 +39,7 @@ export default {
   methods: {
     getCaptcha () {
       const uid = this.$store.state.uuid
-      console.log('getCaptcha', uid)
+      // console.log('getCaptcha', uid)
       const params = { uuid: uid }
       getCaptcha(params).then(res => {
         if (res.code === 200) {

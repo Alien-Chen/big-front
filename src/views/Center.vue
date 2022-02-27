@@ -23,11 +23,11 @@ export default {
   data () {
     return {
       lists: [
-        {
-          name: '我的主页',
-          icon: 'layui-icon-home',
-          link: 'home'
-        },
+        // {
+        //   name: '我的主页',
+        //   icon: 'layui-icon-home',
+        //   link: 'home'
+        // },
         {
           name: '用户中心',
           icon: 'layui-icon-friends',
@@ -38,18 +38,18 @@ export default {
           icon: 'layui-icon-set',
           link: 'Info',
           activeClass: 'layui-this'
-        },
-        {
-          name: '我的帖子',
-          icon: 'layui-icon-form',
-          link: 'Mypost',
-          activeClass: 'layui-this'
-        },
-        {
-          name: '我的消息',
-          icon: 'layui-icon-reply-fill',
-          link: 'Msg'
         }
+        // {
+        //   name: '我的帖子',
+        //   icon: 'layui-icon-form',
+        //   link: 'Mypost',
+        //   activeClass: 'layui-this'
+        // },
+        // {
+        //   name: '我的消息',
+        //   icon: 'layui-icon-reply-fill',
+        //   link: 'Msg'
+        // }
         // {
         //   name: '其他设置',
         //   icon: 'layui-icon-component',

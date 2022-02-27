@@ -7,7 +7,9 @@
         </a>
         <h2>
           <a class="layui-badge">{{ item.catalog }}</a>
-          <a href="jie/detail.html">{{ item.title }}</a>
+          <router-link :to="{ name: 'Detail', params: { tid: item._id } }">{{
+            item.title
+          }}</router-link>
         </h2>
         <div class="fly-list-info">
           <a href="user/home.html" link>
@@ -55,7 +57,6 @@
 </template>
 
 <script>
-import moment from 'dayjs'
 
 import _ from 'lodash'
 
@@ -102,15 +103,15 @@ export default {
       return this.list
     }
   },
-  filters: {
-    createDate (val) {
-      if (moment(val).isBefore(moment().subtract(7, 'days'))) {
-        return moment(val).format('YYYY-MM-DD')
-      } else {
-        return moment().from(val)
-      }
-    }
-  },
+  // filters: {
+  //   createDate (val) {
+  //     if (moment(val).isBefore(moment().subtract(7, 'days'))) {
+  //       return moment(val).format('YYYY-MM-DD')
+  //     } else {
+  //       return moment().from(val)
+  //     }
+  //   }
+  // },
   methods: {
     more () {
       this.$emit('nextPage')

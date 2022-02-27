@@ -22,7 +22,7 @@
           >
             <div class="layui-tab-item layui-show">
               <form>
-                <validation-observer ref="observer" v-slot="{ invalid }">
+                <validation-observer ref="observer">
                   <div class="layui-row layui-col-space15 layui-form-item">
                     <div class="layui-col-md3">
                       <validation-provider
@@ -81,6 +81,7 @@
                               type="text"
                               id="L_title"
                               name="title"
+                              v-model="title"
                               required
                               lay-verify="required"
                               autocomplete="off"
@@ -162,11 +163,9 @@
                   </div>
                   <div class="layui-form-item">
                     <button
+                      type="submit"
                       class="layui-btn"
-                      :disabled="invalid"
-                      lay-filter="*"
-                      lay-submit
-                      @click="submit()"
+                      @click.prevent="submit"
                     >
                       立即发布
                     </button>
@@ -283,6 +282,7 @@ export default {
         this.$message('文章内容不得为空！')
         return
       }
+      console.log('start')
       // 添加新的文章
       addPost({
         title: this.title,
@@ -290,14 +290,14 @@ export default {
         content: this.content,
         fav: this.favList[this.favIndex],
         code: this.code,
-        sid: this.$store.state.sid
+        sid: this.$store.state.uuid
       }).then((res) => {
         if (res.code === 200) {
           // 清空已经发布的内容
           localStorage.setItem('addData', '')
           this.$message('发贴成功~~2s后跳转！')
           setTimeout(() => {
-            this.$router.push({ name: 'index' })
+            this.$router.push({ name: 'detail', params: { tid: res.data._id } })
           }, 2000)
         } else {
           this.$message(res.msg)

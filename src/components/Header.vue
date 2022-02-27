@@ -4,6 +4,12 @@
       <!-- <a class="fly-logo" href="/">
         <img src="../assets/logo-2.png" alt="layui" />
       </a> -->
+      <div class="logo-wrap">
+        <div class="avatar">
+          <img src="../assets/logo.jpeg" />
+        </div>
+        <span>小强社区</span>
+      </div>
       <!-- <ul class="layui-nav fly-nav layui-hide-xs">
         <li class="layui-nav-item layui-this">
           <a href="#"> <i class="iconfont icon-jiaoliu"></i>交流 </a>
@@ -64,23 +70,32 @@
               :class="{ 'layui-show': isHover }"
             >
               <dd>
-                <router-link :to="{ name: 'Info' }">
-                  <i class="layui-icon">&#xe620;</i>基本设置
-                </router-link>
-              </dd>
-              <dd>
-                <router-link :to="{ name: 'Msg' }">
-                  <i class="iconfont icon-tongzhi" style="top: 4px"></i>我的消息
-                </router-link>
-              </dd>
-              <dd>
-                <router-link :to="{ name: 'Info' }">
+                <router-link :to="{ name: 'ChannelIndex' }">
                   <i
                     class="layui-icon"
                     style="margin-left: 2px; font-size: 22px"
                     >&#xe68e;</i
-                  >我的主页
+                  >主页
                 </router-link>
+              </dd>
+              <dd>
+                <router-link :to="{ name: 'Info' }">
+                  <i class="layui-icon">&#xe620;</i>基本设置
+                </router-link>
+              </dd>
+              <!-- <dd>
+                <router-link :to="{ name: 'Msg' }">
+                  <i class="iconfont icon-tongzhi" style="top: 4px"></i>我的消息
+                </router-link>
+              </dd> -->
+              <dd>
+                <a href="http://blog.chenzhiqiang.work" target="blank">
+                  <i
+                    class="layui-icon"
+                    style="margin-left: 2px; font-size: 22px"
+                    >&#xe7ae;</i
+                  >我的博客
+                </a>
               </dd>
               <hr style="margin: 5px 0" />
               <dd>
@@ -154,6 +169,31 @@ export default {
   left: -15px;
   top: -10px;
   margin-left: 15px;
+}
+
+.layui-container {
+  height: 100%;
+}
+
+.logo-wrap {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 100%;
+  .avatar {
+    margin-right: 10px;
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  span {
+    font-size: 20px;
+  }
 }
 .header-icon {
   font-size: 28px;
