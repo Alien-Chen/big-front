@@ -297,7 +297,7 @@ export default {
           localStorage.setItem('addData', '')
           this.$message('发贴成功~~2s后跳转！')
           setTimeout(() => {
-            this.$router.push({ name: 'detail', params: { tid: res.data._id } })
+            this.$router.push({ name: 'Detail', params: { tid: res.data._id } })
           }, 2000)
         } else {
           this.$message(res.msg)

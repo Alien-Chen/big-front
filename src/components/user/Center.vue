@@ -63,44 +63,44 @@ export default {
       lists: [
         {
           name: '修改信息',
-          route: 'info',
+          route: 'Info',
           icon: 'layui-icon-set'
         },
         {
           name: '修改头像',
-          route: 'pic',
+          route: 'Pic',
           icon: 'layui-icon-face-smile'
         },
         {
           name: '修改密码',
-          route: 'passwd',
+          route: 'Passwd',
           icon: 'layui-icon-password'
         },
-        {
-          name: '账号绑定',
-          route: 'account',
-          icon: 'layui-icon-app'
-        },
+        // {
+        //   name: '账号绑定',
+        //   route: 'Account',
+        //   icon: 'layui-icon-app'
+        // },
         {
           name: '发表新贴',
-          route: '',
+          route: 'Add',
           icon: 'layui-icon-add-circle'
-        },
-        {
-          name: '查看分享',
-          route: '',
-          icon: 'layui-icon-share'
-        },
-        {
-          name: '我的帖子',
-          route: 'mypost',
-          icon: 'layui-icon-username'
-        },
-        {
-          name: '我的收藏',
-          route: 'mycollection',
-          icon: 'layui-icon-rate-solid'
         }
+        // {
+        //   name: '查看分享',
+        //   route: '',
+        //   icon: 'layui-icon-share'
+        // },
+        // {
+        //   name: '我的帖子',
+        //   route: 'mypost',
+        //   icon: 'layui-icon-username'
+        // },
+        // {
+        //   name: '我的收藏',
+        //   route: 'mycollection',
+        //   icon: 'layui-icon-rate-solid'
+        // }
       ]
     }
   },
