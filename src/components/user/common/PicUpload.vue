@@ -49,7 +49,7 @@ export default {
         if (res.code === 200) {
           const baseUrl =
             process.env.NODE_ENV === 'prod'
-              ? config.BaseUrl.pro
+              ? config.BaseUrl.prod
               : config.BaseUrl.dev
           this.pic = baseUrl + res.data
           // 更新用户基本资料 -> updateUserInfo
